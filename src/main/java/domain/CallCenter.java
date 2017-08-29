@@ -8,32 +8,48 @@ import service.Dispatcher;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 
 
+/**
+ * This class is unnecesarry, but in the order of the problem
+ * it appears like a concept
+ *
+ */
 public class CallCenter {
 
     private Dispatcher dispatcher;
     private LinkedList<Call> unAttendedCalls = new LinkedList<>();
-    public void incomingCalls(){
 
-        setUpTheDispatcher();
+    /**
+     * @throws InterruptedException
+     * @throws ExecutionException
+     * @throws TimeoutException
+     * This method simulate the incoming calls and their dispatch
+     */
+    public void incomingCalls() throws InterruptedException, ExecutionException, TimeoutException {
+
         Call call;
         for(int i=0; i<10; i++){
             call = new Call(i);
-            if (dispatcher.dispatchCall(call)) {
-                System.out.println("Gracias por usar nuestros servicios");
-            }
+            if(dispatcher.dispatchCall(call))
+                System.out.println("La llamda " +call.get_id() +
+                        " ha finalizado con éxito");
             else
                 unAttendedCalls.addLast(call);
         }
-        /** caso de que hayan llegado llamadas y no hayan sido atendidas
-         * bien porque no había empleados disponibles o porque el dispatcher estaba lleno
-         */
         while(!unAttendedCalls.isEmpty()){
-            dispatcher.dispatchCall(unAttendedCalls.pop());
+            call = unAttendedCalls.pop();
+            dispatcher.dispatchCall(call);
         }
+
+        dispatcher.shutdownLine();
     }
 
+    /**
+     * This method generate a collection of employees
+     */
     private void setUpTheDispatcher(){
         dispatcher = new Dispatcher(Arrays.asList(
                 new Operator(1),

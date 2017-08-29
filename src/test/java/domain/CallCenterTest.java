@@ -9,8 +9,14 @@ import service.Dispatcher;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 
 
+/**
+ *
+ */
 public class CallCenterTest {
 
     private Dispatcher dispatcher;
@@ -18,7 +24,8 @@ public class CallCenterTest {
 
     /**
      * @throws Exception
-     * Caso de prueba que crea 10 trabajadores y 10 llamdas concurrentes.
+     * Test method that simulate 10 incoming calls simultaneously and generate
+     * a set of 10 Employees
      */
     @Test
     public void incomingTenCalls() throws Exception {
@@ -28,7 +35,8 @@ public class CallCenterTest {
 
     /**
      * @throws Exception
-     * Caso de prueba que crea 3 trabajadores y 50 llamdas concurrentes.
+     * Test method that simulate 50 incoming calls simultaneously and generate
+     * a set of 10 Employees
      */
     @Test
     public void incomingMoreThanTenCalls() throws  Exception {
@@ -36,32 +44,40 @@ public class CallCenterTest {
         generateCalls(50);
     }
 
-    private void generateCalls(int cantCalls) {
+    /**
+     * @param cantCalls
+     * @throws InterruptedException
+     * @throws ExecutionException
+     * @throws TimeoutException
+     * Genera un numero de llamadas pasadas por parámetros
+     */
+    private void generateCalls(int cantCalls) throws InterruptedException, ExecutionException, TimeoutException {
 
         Call call;
         for(int i=0; i<cantCalls; i++){
             call = new Call(i);
-            if (dispatcher.dispatchCall(call)) {
-                System.out.println("Gracias por usar nuestros servicios");
-            }
+            if(dispatcher.dispatchCall(call))
+                System.out.println("La llamda " +call.get_id() +
+                        " ha finalizado con exito");
             else {
-                System.out.println("Lamada " + call.get_id() + " en espera");
                 unAttendedCalls.addLast(call);
+                System.out.println("La llamda " + call.get_id() + " fue puesta en espera " +
+                        "para ser atendida");
             }
         }
-        /** en caso de que hayan llegado llamadas y no hayan sido atendidas
-         * bien porque no había empleados disponibles o porque el dispatcher estaba lleno
-         */
         while(!unAttendedCalls.isEmpty()){
             call = unAttendedCalls.pop();
             dispatcher.dispatchCall(call);
-            System.out.println("Lamada " + call.get_id() + " eliminada de la cola de espera");
+            System.out.println("La llamda " +call.get_id() +
+                    " ha finalizado con exito");
         }
+
+        dispatcher.shutdownLine();
     }
 
 
     /**
-     * Genera 10 trabajadores 4 Operadores, 4 supervisores y 2 Directores
+     * Generate 10 employees 4 Operators, 4 Supervisors y 2 Directors
      */
     private void setUpDispatcherTen(){
         dispatcher = new Dispatcher(Arrays.asList(
@@ -79,13 +95,30 @@ public class CallCenterTest {
     }
 
     /**
-     * Genera 3 trabajadores 1 Operadores, 1 supervisores y 1 Directores
+     * Generate 10 employees 4 Operators, 8 Supervisors y 8 Directors
      */
     private void setUpDispatcherLessTen(){
         dispatcher = new Dispatcher(Arrays.asList(
                 new Operator(1),
                 new Supervisor(2),
-                new Director(5)
+                new Director(3),
+                new Supervisor(4),
+                new Director(5),
+                new Supervisor(6),
+                new Operator(7),
+                new Director(8),
+                new Supervisor(9),
+                new Operator(10),
+                new Operator(11),
+                new Supervisor(12),
+                new Director(13),
+                new Supervisor(14),
+                new Director(15),
+                new Supervisor(16),
+                new Director(17),
+                new Director(18),
+                new Supervisor(19),
+                new Director(20)
         ));
     }
 

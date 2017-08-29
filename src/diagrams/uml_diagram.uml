@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="256.75" y="500.0">service.Dispatcher</node>
+    <node x="403.2986111111111" y="736.0">domain.CallCenter</node>
+    <node x="201.0" y="322.5">domain.model.Director</node>
+    <node x="666.5" y="274.0">domain.model.Call</node>
+    <node x="300.49861111111113" y="0.0">domain.model.Employee</node>
+    <node x="0.0" y="322.5">domain.model.Operator</node>
+    <node x="465.5" y="322.5">domain.model.Supervisor</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="service.Dispatcher" target="domain.model.Director">
+      <point x="-83.5" y="-88.0" />
+      <point x="340.25" y="480.0" />
+      <point x="336.75" y="480.0" />
+      <point x="45.25" y="39.5" />
+    </edge>
+    <edge source="service.Dispatcher" target="domain.model.Supervisor">
+      <point x="83.5" y="-88.0" />
+      <point x="507.25" y="480.0" />
+      <point x="510.75" y="480.0" />
+      <point x="-45.25" y="39.5" />
+    </edge>
+    <edge source="domain.CallCenter" target="service.Dispatcher">
+      <point x="-18.6875" y="-64.0" />
+      <point x="534.1111111111111" y="716.0" />
+      <point x="507.25" y="716.0" />
+      <point x="83.5" y="88.0" />
+    </edge>
+    <edge source="domain.model.Operator" target="domain.model.Employee">
+      <point x="0.0" y="-39.5" />
+      <point x="90.5" y="244.0" />
+      <point x="324.99861111111113" y="244.0" />
+      <point x="-98.0" y="112.0" />
+    </edge>
+    <edge source="service.Dispatcher" target="domain.model.Operator">
+      <point x="-139.16666666666663" y="-88.0" />
+      <point x="284.58333333333337" y="480.0" />
+      <point x="135.75" y="480.0" />
+      <point x="45.25" y="39.5" />
+    </edge>
+    <edge source="service.Dispatcher" target="domain.model.Employee">
+      <point x="-27.833333333333314" y="-88.0" />
+      <point x="395.91666666666663" y="480.0" />
+      <point x="419.6347222222222" y="480.0" />
+      <point x="419.6347222222222" y="254.0" />
+      <point x="422.99861111111113" y="254.0" />
+      <point x="0.0" y="112.0" />
+    </edge>
+    <edge source="domain.model.Director" target="domain.model.Employee">
+      <point x="0.0" y="-39.5" />
+      <point x="291.5" y="254.0" />
+      <point x="373.99861111111113" y="254.0" />
+      <point x="-49.0" y="112.0" />
+    </edge>
+    <edge source="domain.CallCenter" target="domain.model.Supervisor">
+      <point x="18.6875" y="-64.0" />
+      <point x="571.4861111111111" y="716.0" />
+      <point x="601.25" y="716.0" />
+      <point x="45.25" y="39.5" />
+    </edge>
+    <edge source="domain.CallCenter" target="domain.model.Director">
+      <point x="-93.4375" y="-64.0" />
+      <point x="459.3611111111111" y="706.0" />
+      <point x="246.24999999999997" y="706.0" />
+      <point x="-45.25" y="39.5" />
+    </edge>
+    <edge source="domain.model.Supervisor" target="domain.model.Employee">
+      <point x="0.0" y="-39.5" />
+      <point x="556.0" y="254.0" />
+      <point x="520.9986111111111" y="254.0" />
+      <point x="98.0" y="112.0" />
+    </edge>
+    <edge source="domain.CallCenter" target="domain.model.Call">
+      <point x="93.4375" y="-64.0" />
+      <point x="646.2361111111111" y="706.0" />
+      <point x="771.4958333333333" y="706.0" />
+      <point x="771.4958333333333" y="470.0" />
+      <point x="782.75" y="470.0" />
+      <point x="23.25" y="88.0" />
+    </edge>
+    <edge source="domain.CallCenter" target="domain.model.Operator">
+      <point x="-130.8125" y="-64.0" />
+      <point x="421.9861111111111" y="716.0" />
+      <point x="45.25" y="716.0" />
+      <point x="-45.25" y="39.5" />
+    </edge>
+    <edge source="service.Dispatcher" target="domain.model.Call">
+      <point x="139.16666666666663" y="-88.0" />
+      <point x="562.9166666666666" y="480.0" />
+      <point x="689.75" y="480.0" />
+      <point x="-69.75" y="88.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6923076923076923" x="426.5" y="432.0" />
+  <SelectedNodes>
+    <node>service.Dispatcher</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

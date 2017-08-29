@@ -5,16 +5,31 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.*;
 
+/**
+ * The Dispatcher class
+ */
 public class Dispatcher{
-    private int cantCalls = 0;
-    private List<Employee> employees;
-    private ExecutorService executor;
+    private static final int CALL_CALLS = 10;
+    private int callsCounter = 0;
+    private final BlockingQueue<Employee> employees;
+    private final ExecutorService line;
 
+    /**
+     * @param employees
+     * Dispatcher constructor
+     */
     public Dispatcher(List<Employee> employees) {
-        this.employees = employees;
-        executor = Executors.newFixedThreadPool(10);
+        this.employees = new PriorityBlockingQueue();
+        this.employees.addAll(employees);
+        line = Executors.newFixedThreadPool(CALL_CALLS);
     }
 
+
+    /**
+     * @param call
+     * @return callAttended
+     * The dispatch method,
+     */
     public boolean dispatchCall (Call call){
         boolean callAttended;
         Employee employee = employees
@@ -29,52 +44,32 @@ public class Dispatcher{
                         .findAny())
                 .orElse(null);
 
-        /**caso de que no exista empleados disponibles o exeda el
-         * número de llamdas disponibles
-         */
-
-        if(employee!=null && cantCalls<10) {
+        //caso de que no exista empleados disponibles o exeda el
+        if(employee!=null && callsCounter <10) {
             callAttended = true;
-            System.out.println("La llamada " + call.get_id() + " será atendida por el " + employee.getClass() + " " + employee.get_id());
-
-            Callable<Integer> task = () ->{
-                synchronized (employee) {
-                    try {
-                        cantCalls++;
-                        employee.setBusy(true);
-                        TimeUnit.SECONDS.sleep(call.getDuration());
-                        employee.setBusy(false);
-                        cantCalls--;
-                    } catch (InterruptedException e) {
-                        throw new IllegalStateException("task interrupted", e);
-                    }
-                    return employee.get_id();
-                }
-            };
-
-            Future<Integer> future = executor.submit(task);
-            /*executor.submit(() -> {
-
+            System.out.println("La llamada " + call.get_id() + " será atendida por el " + employee.toString());
+            line.submit(() -> {
                     synchronized (employee) {
                         try {
-                            cantCalls++;
+                            callsCounter++;
                             employee.setBusy(true);
                             TimeUnit.SECONDS.sleep(call.getDuration());
                             employee.setBusy(false);
-                            cantCalls--;
+                            callsCounter--;
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-
                     }
-
-
-            });*/
+            });
 
         }
         else
             callAttended = false;
 
         return callAttended;
+    }
+
+    public void shutdownLine(){
+        line.shutdown();
     }
 }
