@@ -5,10 +5,10 @@
 
 ## Documentación
 Cada clase y método se encuentra comentariada (JavaDoc) explicando sus parámetros, lo que devuelve, en caso de hacerlo
-y además se diseño un diagrama UML con el plugin para IntellIJidea simpleUML
+y además se diseñó un diagrama UML con el plugin para IntellIJidea simpleUML
 
 ## Puntos extras
-* En caso de que no exista ningún empleado libre, la llamada entrante será almacenada en una lista enlazada en forma de cola LIFO, para luego ser atendida cuando se libere algún empleado.
+* En caso de que no exista ningún empleado libre, la llamada entrante será almacenada en una lista enlazada en forma de cola FIFO, para luego ser atendida cuando se libere algún empleado.
 
 * En caso de que lleguen más de 10 llamadas concurrentes, se procederá de igual forma que el punto anterior.
 
